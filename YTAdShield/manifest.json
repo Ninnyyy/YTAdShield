@@ -1,0 +1,51 @@
+{
+  "name": "YTAdShield",
+  "description": "Advanced YouTube ad blocker with auto-skip, smart muting, and per-channel controls.",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://www.youtube.com/*",
+    "*://youtube.com/*",
+    "*://m.youtube.com/*",
+    "*://*.googlevideo.com/*",
+    "*://*.doubleclick.net/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "YTAdShield"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "yt_static_rules",
+        "enabled": true,
+        "path": "rules_yt_ads.json"
+      }
+    ]
+  }
+}
